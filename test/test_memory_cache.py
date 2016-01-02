@@ -17,6 +17,9 @@ def need_cache_function(input):
     return random.randint(1, 100)
 
 if __name__ == "__main__":
-    for i in xrange(10):
-    	sleep(1)
-    	print need_cache_function(2), 
+	rst = ''
+	for i in range(10):
+		sleep(1)
+		rst = rst + ', ' + str(need_cache_function(2))
+	rst = rst[2:]
+	print rst
