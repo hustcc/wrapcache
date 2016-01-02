@@ -35,7 +35,7 @@ GitHub: https://github.com/hustcc/wrapcache
 """
 
 setup(name = 'wrapcache',
-      version = '0.1',
+      version = '1.0.1',
       description = 'Short for wraps cache. A method cache system base on method Decorators.',
       long_description = LONGDOC,
       author = 'hustcc',
