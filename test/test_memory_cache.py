@@ -1,5 +1,6 @@
 #-*-coding: utf-8 -*-
 import sys
+sys.path.append(".")
 sys.path.append("../")
 from wrapche import wrapche
 
@@ -18,4 +19,4 @@ def need_cache_function(input):
 if __name__ == "__main__":
     for i in xrange(10):
     	sleep(1)
-    	print need_cache_function(2)
+    	print need_cache_function(2), 
