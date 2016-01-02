@@ -3,9 +3,12 @@ __version__ = '1.0.1'
 __license__ = 'MIT'
 
 import time
+import sys
 import hashlib
 import pickle
 from functools import wraps
+from adapter.CacheException import CacheTimeoutException
+from adapter.MemoryAdapter import MemoryAdapter
 
 '''
 wrapcache: wrap cache
@@ -15,36 +18,51 @@ A python Function / Method OUTPUT cache system base on function Decorators.
 Auto cache the Funtion OUTPUT for sometime.
 '''
 
-_memory_cache = {} # store cache in Memory
-
-def _is_timeout(cache, timeout):
-	'''
-	whether cache is timeout?
-	'''
-	if timeout == -1: #never cahce
-		return True
-	return time.time() - cache.get('time', 0) > timeout
-
 def _wrap_key(function, args, kws):
 	'''
 	get the key from the function input.
 	'''
 	return hashlib.md5(pickle.dumps((function.__name__, args, kws))).hexdigest()
 
-def get(function, *args, **kws):
+def keyof(function, *args, **kws):
 	'''
-	Programmatic get the cache value.
+	get the function cache key
 	'''
-	return _memory_cache.get(_wrap_key(function, args, kws), {}).get('value', None)
+	return _wrap_key(function, args, kws)
 
-def remove(function, *args, **kws):
+def get(key, adapter = MemoryAdapter):
 	'''
-	Programmatic remove the cache.
+	get the cache value
 	'''
-	return _memory_cache.pop(_wrap_key(function, args, kws), {}).get('value', None)
+	adapter_instance = adapter(timeout = sys.maxint)
+	try:
+		return adapter_instance.get(key)
+	except CacheTimeoutException, _:
+		return None
+
+def remove(key, adapter = MemoryAdapter):
+	'''
+	remove cache by key 
+	'''
+	adapter_instance = adapter()
+	return adapter_instance.remove(key)
+
+def set(key, value, timeout = -1, adapter = MemoryAdapter):
+	'''
+	set cache by code, must set timeout length
+	'''
+	adapter_instance = adapter(timeout = timeout)
+	return adapter_instance.set(key, value)
+
+def flush(adapter = MemoryAdapter):
+	'''
+	clear all the caches
+	'''
+	adapter_instance = adapter()
+	return adapter_instance.flush()
 
 
-def wrapcache(timeout = -1, cache = 'memory'):
+def wrapcache(timeout = -1, adapter = MemoryAdapter):
 	'''
 	the Decorator to cache Function.
 	'''
@@ -52,22 +70,13 @@ def wrapcache(timeout = -1, cache = 'memory'):
 		@wraps(function)
 		def __wrapcache(*args, **kws):
 			hash_key = _wrap_key(function, args, kws)
-			if cache == 'memory':
-				#memory cache
-				if hash_key in _memory_cache:
-					if not _is_timeout(_memory_cache[hash_key], timeout):
-						return _memory_cache[hash_key].get('value', None)
-
-				# no cache or cache timeout, exec function, and cache the function ouput
-				result = function(*args, **kws)
-				#cache the output into memory
-				_memory_cache[hash_key] = {
-					'value' : result,
-					'time'  : time.time()
-				}
-			else:
-				# cache type is not valid, do not cache.
-				result = function(*args, **kws)
-			return result
+			adapter_instance = adapter(timeout = timeout)
+			try:
+				return adapter_instance.get(hash_key)
+			except CacheTimeoutException, _:
+				#timeout
+				value = function(*args, **kws)
+				adapter_instance.set(hash_key, value)
+				return value
 		return __wrapcache
 	return _wrapcache

@@ -63,5 +63,5 @@ setup(name = 'wrapcache',
       keywords = 'wrapcache,Wraps Cache,Cache System,Decorators Cache,Function Cache,Method Cache',
       packages = ['wrapcache'],
       package_dir = {'wrapcache':'wrapcache'},
-      package_data = {'wrapcache':['*.*']}
+      package_data = {'wrapcache':['*.*', 'adapter/*']}
 )

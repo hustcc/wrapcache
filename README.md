@@ -35,16 +35,21 @@ if __name__ == "__main__":
 		print(need_cache_function(1, t = 2, o = 3))
 	
 	#get cache Programmatic
-	print(wrapcache.get(need_cache_function, 1, o = 3, t = 2))
+	key_func = wrapcache.keyof(need_cache_function, 1, o = 3, t = 2)
+	print(wrapcache.get(key_func))
 	#remove cache Programmatic
-	print(wrapcache.remove(need_cache_function, 1, o = 3, t = 2))
+	print(wrapcache.remove(wrapcache.keyof(need_cache_function, 1, o = 3, t = 2)))
 
 ```
 
 
-## How to install?
+## How to Install and Use?
 
-### 1. Use tool install
+### Install
+
+Three way to install: 
+
+#### 1. Use tool install
 
  - `easy_install wrapcache`
  
@@ -52,16 +57,40 @@ or
 
  -  `pip install wrapcache` / `pip3 install wrapcache`
 
-### 2. Download to install
+#### 2. Download to install
 
  - Download from [https://pypi.python.org/pypi/wrapcache/](https://pypi.python.org/pypi/wrapcache/), and run `python setup.py install`.
 
-### 3. Manual installation
+#### 3. Manual installation
 
  - Manual installation: Put `wrapcache` folder into current directory or `site-packages`, then `import wrapcache` to use.
+
+
+### Usage
+
+#### Decorators
+
+```python
+
+import wrapcache
+@wrapcache.wrapcache(timeout = 3)
+def need_cache_function():
+	return 'hello wrapcache'
+
+```
+
+#### API
+
+1. **`wrapcache.keyof(func, *args, **kws)`**: get the key of function output cache.
+2. **`wrapcache.get(key, adapter = MemoryAdapter)`**: get the value of cache.
+3. **`wrapcache.set(key, value, adapter = MemoryAdapter)`**: set cache use code.
+4. **`wrapcache.remove(key, adapter = MemoryAdapter)`**: remove a cache.
+5. **`wrapcache.flush(adapter = MemoryAdapter)`**: clear all the cache.
+
+The API 2~5, need to input a `adapter` to set which db to flush.
 
 
 ## TODO
 
  - add redis and memcache supported.
- - more test case.
+ - package to pip server.
