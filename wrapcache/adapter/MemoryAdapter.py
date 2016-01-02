@@ -3,8 +3,8 @@
 Memory Adapter object.
 '''
 import time
-from BaseAdapter import BaseAdapter
-from CacheException import CacheTimeoutException
+from wrapcache.adapter.BaseAdapter import BaseAdapter
+from wrapcache.adapter.CacheException import CacheTimeoutException
 
 
 class MemoryAdapter(BaseAdapter):

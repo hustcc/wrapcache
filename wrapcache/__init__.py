@@ -7,8 +7,8 @@ import sys
 import hashlib
 import pickle
 from functools import wraps
-from adapter.CacheException import CacheTimeoutException
-from adapter.MemoryAdapter import MemoryAdapter
+from wrapcache.adapter.CacheException import CacheTimeoutException
+from wrapcache.adapter.MemoryAdapter import MemoryAdapter
 
 '''
 wrapcache: wrap cache
@@ -34,7 +34,7 @@ def get(key, adapter = MemoryAdapter):
 	'''
 	get the cache value
 	'''
-	adapter_instance = adapter(timeout = sys.maxint)
+	adapter_instance = adapter(timeout = sys.maxsize)
 	try:
 		return adapter_instance.get(key)
 	except CacheTimeoutException:
