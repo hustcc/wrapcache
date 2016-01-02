@@ -37,7 +37,7 @@ def get(key, adapter = MemoryAdapter):
 	adapter_instance = adapter(timeout = sys.maxint)
 	try:
 		return adapter_instance.get(key)
-	except CacheTimeoutException, _:
+	except CacheTimeoutException:
 		return None
 
 def remove(key, adapter = MemoryAdapter):
