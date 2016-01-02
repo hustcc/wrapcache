@@ -73,7 +73,7 @@ def wrapcache(timeout = -1, adapter = MemoryAdapter):
 			adapter_instance = adapter(timeout = timeout)
 			try:
 				return adapter_instance.get(hash_key)
-			except CacheTimeoutException, _:
+			except CacheTimeoutException:
 				#timeout
 				value = function(*args, **kws)
 				adapter_instance.set(hash_key, value)
