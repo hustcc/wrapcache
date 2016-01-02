@@ -38,7 +38,7 @@ def _dump_key(function, args, kw):
 	'''
 	TODO: get the key from the function input.
 	'''
-	return pickle.dumps((function.func_name, args, kw))
+	return pickle.dumps((function.__name__, args, kw))
 
 def wrapche(cache = 'memory', timeout = -1):
 	'''
