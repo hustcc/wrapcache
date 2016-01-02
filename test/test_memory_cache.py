@@ -22,4 +22,4 @@ if __name__ == "__main__":
 		sleep(1)
 		rst = rst + ', ' + str(need_cache_function(2))
 	rst = rst[2:]
-	print rst
+	print(rst)
