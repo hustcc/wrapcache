@@ -9,6 +9,6 @@ python:
 install:
   - pip install .
 before_script:
-  - chmod 777 ./test/do_test.sh
+  - chmod 777 ./tests/do_test.sh
 # command to run tests
-script: ./test/do_test.sh
+script: ./tests/do_test.sh

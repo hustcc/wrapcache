@@ -1,28 +1,23 @@
 # -*- coding: utf-8 -*-
 from distutils.core import setup
 LONGDOC = """
-wrapche
+wrapcache
 =====
 
-wrapche：wraps cache简写， python方法装饰器缓存系统。
+wrapcache：wrap cache， python方法装饰器缓存系统。
 
-wrapche: Short for wraps cache. A Function / Method OUTPUT cache system base on function Decorators.
+wrapcache: Short for wraps cache. A Function / Method OUTPUT cache system base on function Decorators.
 
 完整文档见 ``README.md``
 
-GitHub: https://github.com/hustcc/wrapche
+GitHub: https://github.com/hustcc/wrapcache
 
 特点
 ====
 
--  支持三种缓存方式
-
-   -  程序内存缓存：适合于后台运行方式的程序；
-   -  redis缓存：将cache缓存到redis服务器中，便于扩展，同时方便对于wsgi运行方式的程序缓存方法；
-   -  文件缓存：最简单的模式，将数据缓存到硬盘文件中；
-
--  使用方便：一个装饰器放到方法的头部即可缓存该方法
--  配置简单：cache指定缓存方式、timeout指定缓存过期时间，加上一些其他的配置项，例如redis连接实例等；
+-  兼容各种版本的python，包括python2和python3的个版本；
+-  使用方便：一个装饰器放到方法的头部即可缓存该方法；
+-  配置简单：cache指定缓存方式、timeout指定缓存过期时间；
 -  MIT 授权协议；
 
 
@@ -31,21 +26,21 @@ GitHub: https://github.com/hustcc/wrapche
 
 代码对 Python 2/3 均兼容
 
--  全自动安装： ``easy_install wrapche`` 或者 ``pip install wrapche`` / ``pip3 install wrapche``
--  半自动安装：先下载 https://pypi.python.org/pypi/wrapche/ ，解压后运行
+-  全自动安装： ``easy_install wrapcache`` 或者 ``pip install wrapcache`` / ``pip3 install wrapcache``
+-  半自动安装：先下载 https://pypi.python.org/pypi/wrapcache/ ，解压后运行
    python setup.py install
 -  手动安装：将 jieba 目录放置于当前目录或者 site-packages 目录
--  通过 ``import wrapche`` 来引用
+-  通过 ``import wrapcache`` 来引用
 
 """
 
-setup(name = 'wrapche',
+setup(name = 'wrapcache',
       version = '0.1',
       description = 'Short for wraps cache. A method cache system base on method Decorators.',
       long_description = LONGDOC,
       author = 'hustcc',
       author_email = 'i@atool.org',
-      url = 'https://github.com/hustcc/wrapche',
+      url = 'https://github.com/hustcc/wrapcache',
       license = "MIT",
       classifiers = [
         'Intended Audience :: Developers',
@@ -65,8 +60,8 @@ setup(name = 'wrapche',
         'Topic :: Utilities',
         'Topic :: Software Development :: Embedded Systems'
       ],
-      keywords = 'wrapche,Wraps Cache,Cache System,Decorators Cache,Function Cache,Method Cache',
-      packages = ['wrapche'],
-      package_dir = {'wrapche':'wrapche'},
-      package_data = {'wrapche':['*.*']}
+      keywords = 'wrapcache,Wraps Cache,Cache System,Decorators Cache,Function Cache,Method Cache',
+      packages = ['wrapcache'],
+      package_dir = {'wrapcache':'wrapcache'},
+      package_data = {'wrapcache':['*.*']}
 )
