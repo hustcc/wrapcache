@@ -3,6 +3,7 @@
 A python Function / Method OUTPUT cache system base on function Decorators.
 
 [![Build Status](https://travis-ci.org/hustcc/wrapcache.svg)](https://travis-ci.org/hustcc/wrapcache)
+[![Build Status](https://codecov.io/github/hustcc/wrapcache/coverage.svg?branch=master)](https://codecov.io/github/hustcc/wrapcache?branch=master)
 
 Source code: [https://github.com/hustcc/wrapcache](https://github.com/hustcc/wrapcache)
 
@@ -13,7 +14,7 @@ Source code: [https://github.com/hustcc/wrapcache](https://github.com/hustcc/wra
 
 The cache keys are dependent completely on the arguments passed to the function. very simple to use. 
 
-Also has some `API` to `Programmatic` get cache or remove cache.
+Also has some `API` to `Programmatic` get cache or remove cache. Support python 2.6 ~ python3.5.
 
 Here's an example of how you might use wrapcache:
 
