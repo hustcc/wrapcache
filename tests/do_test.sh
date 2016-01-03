@@ -1,2 +1,2 @@
 #!/bin/bash
-python tests/test_memory_unitest.py
+coverage run tests/test_memory_unitest.py
