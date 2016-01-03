@@ -61,7 +61,7 @@ class MemoryUnitest(unittest.TestCase):
         #get api
         key_1 = wrapcache.keyof(self.test_class.test_input_cache, i = 1, j = 'hello world')
         value_1 = wrapcache.get(key_1)
-        self.assertIsNone(value_1, 'test_apis fail')
+        self.assertEqual(value_1, None, 'test_apis fail')
         #set api
         value_2 =  wrapcache.set(key_1, 'test_value', timeout = 3)
         self.assertEqual(value_2, 'test_value', 'test_keyof_api fail')
@@ -69,20 +69,20 @@ class MemoryUnitest(unittest.TestCase):
         value_3 = wrapcache.get(key_1)
         self.assertEqual(value_3, 'test_value', 'test_keyof_api fail')
         time.sleep(3)
-        self.assertIsNone(wrapcache.get(key_1), 'test_apis fail')
+        self.assertEqual(wrapcache.get(key_1), None, 'test_apis fail')
 
         #remove api
         value_4 =  wrapcache.set(key_1, 'test_value 4', timeout = 3)
         self.assertEqual(value_4, 'test_value 4', 'test_keyof_api fail')
         value_5 = wrapcache.remove(key_1)
         self.assertEqual(value_4, value_5, 'test_keyof_api fail')
-        self.assertIsNone(wrapcache.get(key_1), 'test_apis fail')
+        self.assertEqual(wrapcache.get(key_1), None, 'test_apis fail')
 
         #flush api
         value_6 =  wrapcache.set(key_1, 'test_value 4', timeout = 3)
         self.assertEqual(value_6, 'test_value 4', 'test_keyof_api fail')
         self.assertTrue(wrapcache.flush(), 'test_keyof_api fail')
-        self.assertIsNone(wrapcache.get(key_1), 'test_apis fail')
+        self.assertEqual(wrapcache.get(key_1), None, 'test_apis fail')
 
         
 if __name__ =='__main__':
