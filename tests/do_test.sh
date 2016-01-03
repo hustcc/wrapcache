@@ -1,2 +1,2 @@
 #!/bin/bash
-python tests/test_memory_cache.py
+python tests/test_memory_unitest.py

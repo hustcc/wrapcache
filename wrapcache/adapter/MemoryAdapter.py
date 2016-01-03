@@ -15,7 +15,7 @@ class MemoryAdapter(BaseAdapter):
 
 	def get(self, key):
 		cache = MemoryAdapter.db.get(key, {})
-		if time.time() - cache.get('time', 0) > self.timeout:
+		if time.time() - cache.get('time', 0) > 0:
 			self.remove(key) #timeout, rm key, reduce memory
 			raise CacheTimeoutException(key)
 		else:
@@ -24,7 +24,7 @@ class MemoryAdapter(BaseAdapter):
 	def set(self, key, value):
 		cache = {
 			'value' : value,
-			'time'  : time.time()
+			'time'  : time.time() + self.timeout
 		}
 		MemoryAdapter.db[key] = cache
 		return value

@@ -34,7 +34,7 @@ def get(key, adapter = MemoryAdapter):
 	'''
 	get the cache value
 	'''
-	adapter_instance = adapter(timeout = sys.maxsize)
+	adapter_instance = adapter()
 	try:
 		return adapter_instance.get(key)
 	except CacheTimeoutException:
