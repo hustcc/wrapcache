@@ -5,6 +5,8 @@ python:
   - "3.2"
   - "3.3"
   - "3.4"
+before_install:
+  - pip install codecov
 # command to install dependencies
 install:
   - pip install .
@@ -12,8 +14,5 @@ before_script:
   - chmod 777 ./tests/do_test.sh
 # command to run tests
 script: ./tests/do_test.sh
-
-before_install:
-  - pip install codecov
 after_success:
   - codecov
