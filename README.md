@@ -2,8 +2,7 @@
 
 A python Function / Method OUTPUT cache system base on function Decorators.
 
-[![Build Status](https://travis-ci.org/hustcc/wrapcache.svg)](https://travis-ci.org/hustcc/wrapcache)
-[![Build Status](https://codecov.io/github/hustcc/wrapcache/coverage.svg?branch=master)](https://codecov.io/github/hustcc/wrapcache?branch=master)
+[![Build Status](https://travis-ci.org/hustcc/wrapcache.svg)](https://travis-ci.org/hustcc/wrapcache) [![codecov Status](https://codecov.io/github/hustcc/wrapcache/coverage.svg?branch=master)](https://codecov.io/github/hustcc/wrapcache?branch=master) [![PyPi Status](https://img.shields.io/pypi/v/wrapcache.svg)](https://pypi.python.org/pypi/wrapcache) [![PyPi Downloads](https://img.shields.io/pypi/dm/wrapcache.svg)](https://pypi.python.org/pypi/wrapcache)
 
 Source code: [https://github.com/hustcc/wrapcache](https://github.com/hustcc/wrapcache)
 
