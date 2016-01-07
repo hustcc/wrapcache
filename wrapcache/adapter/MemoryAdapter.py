@@ -8,6 +8,9 @@ from wrapcache.adapter.CacheException import CacheTimeoutException
 
 
 class MemoryAdapter(BaseAdapter):
+	'''
+	use for memory cache
+	'''
 	def __init__(self, timeout = -1):
 		super(MemoryAdapter, self).__init__(timeout = timeout)
 		if not MemoryAdapter.db:

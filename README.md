@@ -42,6 +42,21 @@ if __name__ == "__main__":
 
 ```
 
+Some config:
+
+```python
+@wrapcache.wrapcache(timeout = timeout, adapter = adapter)
+```
+
+ - **`timeout`**: how much seconds the cache exist. Default is `-1`, not cached.
+ - **`adapter`**: cache where, now can be `RedisAdapter` and `MemoryAdapter`. Default is `MemoryAdapter`. Where use `RedisAdapter`, you need to set redis instance before use. e.g.
+
+```python
+REDIS_POOL = redis.ConnectionPool(host = '10.246.13.1', port = 6379, password = 'redis_pwd', db = 1)
+REDIS_INST = redis.Redis(connection_pool = REDIS_POOL, charset = 'utf8')
+RedisAdapter.db = REDIS_INST
+```
+
 
 ## How to Install and Use?
 
@@ -92,4 +107,4 @@ The API 2~5, need to input a `adapter` to set which db to flush.
 
 ## TODO
 
- - add redis and memcache supported.
+ - add memcache supported.
