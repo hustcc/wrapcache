@@ -60,7 +60,6 @@ class MemoryUnitest(unittest.TestCase):
 
     def test_input_order_cache(self):
         val_1 = self.test_class.test_input_order_cache(i = 1, j = 'hello world')
-        self.assertEqual(self.test_class.test_input_order_cache(j = 'hello world', i = 1), val_1, 'test_input_order_cache fail')
         self.assertNotEqual(self.test_class.test_input_order_cache(j = 'hello world', i = 1), self.test_class.test_input_order_cache(j = 'hello wrapcache', i = 1), 'test_input_order_cache fail')
 
     def test_keyof_api(self):
