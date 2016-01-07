@@ -66,6 +66,7 @@ class MemoryUnitest(unittest.TestCase):
     def test_keyof_api(self):
         key_1 = wrapcache.keyof(self.test_class.test_input_cache, i = 1, j = 'hello world')
         key_2 = wrapcache.keyof(self.test_class.test_input_cache, i = 1, j = 'hello world')
+        
         key_3 = wrapcache.keyof(self.test_class.test_input_cache, j = 'hello world', i = 1)
         key_4 = wrapcache.keyof(self.test_class.test_input_cache, j = 'hello wrapcache', i = 1)
         self.assertEqual(key_1, key_2, 'test_keyof_api fail')
@@ -73,7 +74,6 @@ class MemoryUnitest(unittest.TestCase):
         self.assertNotEqual(key_1, key_4, 'test_keyof_api fail')
 
     def test_apis(self):
-        wrapcache.flush()
         #get api
         key_1 = wrapcache.keyof(self.test_class.test_input_cache, i = 1, j = 'hello world')
         value_1 = wrapcache.get(key_1)
