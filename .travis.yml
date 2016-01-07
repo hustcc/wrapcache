@@ -9,6 +9,7 @@ before_install:
 # command to install dependencies
 install:
   - pip install .
+  - pip install redis
 before_script:
   - chmod 777 ./tests/do_test.sh
 # command to run tests
