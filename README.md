@@ -98,7 +98,7 @@ def need_cache_function():
 
 1. **`wrapcache.keyof(func, *args, **kws)`**: get the key of function output cache.
 2. **`wrapcache.get(key, adapter = MemoryAdapter)`**: get the value of cache.
-3. **`wrapcache.set(key, value, adapter = MemoryAdapter)`**: set cache use code.
+3. **`wrapcache.set(key, value, timeout = -1, adapter = MemoryAdapter)`**: set cache use code.
 4. **`wrapcache.remove(key, adapter = MemoryAdapter)`**: remove a cache.
 5. **`wrapcache.flush(adapter = MemoryAdapter)`**: clear all the cache.
 
