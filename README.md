@@ -6,6 +6,8 @@ A python Function / Method OUTPUT cache system base on function Decorators.
 
 Source code: [https://github.com/hustcc/wrapcache](https://github.com/hustcc/wrapcache)
 
+Issue & Bug: [https://github.com/hustcc/wrapcache/issues/new](https://github.com/hustcc/wrapcache/issues/new)
+
 
 ## What's wrapcache?
 
