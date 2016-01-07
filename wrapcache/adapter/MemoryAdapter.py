@@ -30,7 +30,7 @@ class MemoryAdapter(BaseAdapter):
 			'time'  : time.time() + self.timeout
 		}
 		MemoryAdapter.db[key] = cache
-		return value
+		return True
 
 	def remove(self, key):
 		return MemoryAdapter.db.pop(key, {}).get('value', None)

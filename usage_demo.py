@@ -16,7 +16,7 @@ def need_mem_cache_function():
 def need_redis_cache_function():
 	time.sleep(2)
 	print('redis cache timeout, new...')
-	return random.randint(1, 100)
+	return (random.randint(1, 100), 'Hello wrapcache')
 
 
 if __name__ =='__main__':
@@ -29,7 +29,7 @@ if __name__ =='__main__':
 	#redis cache
 	for i in range(10):
 		time.sleep(1)
-		print(need_redis_cache_function())
+		print(need_redis_cache_function()[0])
 
 	#memory cache
 	for i in range(10):

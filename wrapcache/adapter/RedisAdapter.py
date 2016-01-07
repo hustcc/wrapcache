@@ -29,7 +29,7 @@ class RedisAdapter(BaseAdapter):
 
 	def set(self, key, value):
 		RedisAdapter.db.setex(key, value, self.timeout)
-		return value
+		return True
 
 	def remove(self, key):
 		self._check_db_instanse()

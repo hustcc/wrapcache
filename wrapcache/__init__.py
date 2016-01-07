@@ -5,7 +5,10 @@ __license__ = 'MIT'
 import time
 import sys
 import hashlib
-import pickle
+try:
+	import cPickle as pickle
+except:
+	import pickle
 from functools import wraps
 from wrapcache.adapter.CacheException import CacheTimeoutException
 from wrapcache.adapter.MemoryAdapter import MemoryAdapter
@@ -34,9 +37,8 @@ def get(key, adapter = MemoryAdapter):
 	'''
 	get the cache value
 	'''
-	adapter_instance = adapter()
 	try:
-		return adapter_instance.get(key)
+		return pickle.loads(adapter().get(key))
 	except CacheTimeoutException:
 		return None
 
@@ -44,22 +46,22 @@ def remove(key, adapter = MemoryAdapter):
 	'''
 	remove cache by key 
 	'''
-	adapter_instance = adapter()
-	return adapter_instance.remove(key)
+	return pickle.loads(adapter().remove(key))
 
 def set(key, value, timeout = -1, adapter = MemoryAdapter):
 	'''
 	set cache by code, must set timeout length
 	'''
-	adapter_instance = adapter(timeout = timeout)
-	return adapter_instance.set(key, value)
+	if adapter(timeout = timeout).set(key, pickle.dumps(value)):
+		return value
+	else:
+		return None
 
 def flush(adapter = MemoryAdapter):
 	'''
 	clear all the caches
 	'''
-	adapter_instance = adapter()
-	return adapter_instance.flush()
+	return adapter().flush()
 
 
 def wrapcache(timeout = -1, adapter = MemoryAdapter):
@@ -70,13 +72,13 @@ def wrapcache(timeout = -1, adapter = MemoryAdapter):
 		@wraps(function)
 		def __wrapcache(*args, **kws):
 			hash_key = _wrap_key(function, args, kws)
-			adapter_instance = adapter(timeout = timeout)
 			try:
-				return adapter_instance.get(hash_key)
+				adapter_instance = adapter()
+				return pickle.loads(adapter_instance.get(hash_key))
 			except CacheTimeoutException:
 				#timeout
 				value = function(*args, **kws)
-				adapter_instance.set(hash_key, value)
+				set(hash_key, value, timeout, adapter)
 				return value
 		return __wrapcache
 	return _wrapcache

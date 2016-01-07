@@ -7,7 +7,6 @@ sys.path.append(".")
 sys.path.append("..")
 import wrapcache
 
-
 class TestMemory:
     @wrapcache.wrapcache(timeout = 3)
     def test_cache(self):
@@ -26,6 +25,18 @@ class TestMemory:
         time.sleep(2)
         print('cache timeout, new...')
         return random.randint(1, 100)
+
+
+def tuple_equal(tuple_1, tuple_2):
+    if tuple_1 == None and tuple_2 == None:
+        return True
+    if len(tuple_1) != len(tuple_2):
+        return False
+    else:
+        for x in range(len(tuple_1)):
+            if tuple_1[x] != tuple_2[x]:
+                return False
+    return True
 
 class MemoryUnitest(unittest.TestCase):
     def setUp(self):
@@ -49,7 +60,6 @@ class MemoryUnitest(unittest.TestCase):
 
     def test_input_order_cache(self):
         val_1 = self.test_class.test_input_order_cache(i = 1, j = 'hello world')
-        time.sleep(0.1)
         self.assertEqual(self.test_class.test_input_order_cache(j = 'hello world', i = 1), val_1, 'test_input_order_cache fail')
         self.assertNotEqual(self.test_class.test_input_order_cache(j = 'hello world', i = 1), self.test_class.test_input_order_cache(j = 'hello wrapcache', i = 1), 'test_input_order_cache fail')
 
