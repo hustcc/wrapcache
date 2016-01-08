@@ -67,7 +67,7 @@ if __name__ == '__main__':
 			
 			#test set / get
 			self.test_class.set(key, value)
-			self.assertEqual(self.test_class.get(key), value)
+			self.assertEqual(self.test_class.get(key).decode('utf-8'), value)
 			time.sleep(4)
 			self.assertRaises(CacheTimeoutException, self.test_class.get, key)
 			
