@@ -38,3 +38,34 @@ class MemoryAdapter(BaseAdapter):
 	def flush(self):
 		MemoryAdapter.db = {}
 		return True
+
+if __name__ == '__main__':
+	import unittest
+
+	class TestCase(unittest.TestCase):
+		def setUp(self):
+			self.test_class = MemoryAdapter(timeout = 3)
+		def tearDown(self):
+			pass
+		
+		def test_memory_adapter(self):
+			key = 'test_key_1'
+			value = str(time.time())
+			
+			#test set / get
+			self.test_class.set(key, value)
+			self.assertEqual(self.test_class.get(key), value)
+			time.sleep(4)
+			self.assertRaises(CacheTimeoutException, self.test_class.get, key)
+			
+			#test remove
+			self.test_class.set(key, value)
+			self.test_class.remove(key)
+			self.assertRaises(CacheTimeoutException, self.test_class.get, key)
+			
+			#test flush
+			self.test_class.set(key, value)
+			self.test_class.flush()
+			self.assertRaises(CacheTimeoutException, self.test_class.get, key)
+			
+	unittest.main()
