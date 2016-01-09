@@ -110,3 +110,4 @@ The API 2~5, need to input a `adapter` to set which db to flush.
 ## TODO
 
  - add memcache supported.
+ - add memory LRU cache. Supported by [https://github.com/jlhutch/pylru](https://github.com/jlhutch/pylru)
