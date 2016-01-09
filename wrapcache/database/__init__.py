@@ -16,8 +16,11 @@ class _dlnode(object):
         self.empty = True
 
 
-class LruDB(object):
-    def __init__(self, size):
+class LruCacheDB(object):
+    '''
+    LRU cache database
+    '''
+    def __init__(self, size = -1):
 
         # Create an empty hash table.
         self.table = {}
@@ -33,39 +36,51 @@ class LruDB(object):
         self.head = _dlnode()
         self.head.next = self.head
         self.head.prev = self.head
-
+        
+        self.size = size
+        if self.size <= 0:
+            self.size = -1
         self.listSize = 1
-
-        # Adjust the size
-        self.size(size)
         
         #status var
-        self.hits = 0 
-        self.miss = 0
-        self.remove = 0
+        self.hit_cnt = 0 
+        self.miss_cnt = 0
+        self.remove_cnt = 0
 
     def __len__(self):
+        '''
+        used length of cache table
+        '''
         return len(self.table)
 
     def clear(self):
+        '''
+        claar all the cache, and release memory
+        '''
         for node in self.dli():
             node.empty = True
             node.key = None
             node.value = None
-
+        
+        self.head = _dlnode()
+        self.head.next = self.head
+        self.head.prev = self.head
+        self.listSize = 1
+        
         self.table.clear()
         
         # status var
-        self.hits = 0 
-        self.miss = 0
-        self.remove = 0
+        self.hit_cnt = 0 
+        self.miss_cnt = 0
+        self.remove_cnt = 0
 
     def __contains__(self, key):
         return key in self.table
 
-    # Looks up a value in the cache without affecting cache order.
     def peek(self, key):
-        # Look up the node
+        '''
+        Looks up a value in the cache without affecting cache order.
+        '''
         node = self.table[key]
         return node.value
 
@@ -74,9 +89,9 @@ class LruDB(object):
         # Look up the node
         try:
             node = self.table[key]
-            self.hits += 1
-        except KeyError:
-            self.miss += 1
+            self.hit_cnt += 1
+        except:
+            self.miss_cnt += 1
             raise KeyError
 
         # Update the list ordering. Move this node so that is directly
@@ -99,7 +114,6 @@ class LruDB(object):
         # First, see if any value is stored under 'key' in the cache already.
         # If so we are going to replace that value with the new one.
         if key in self.table:
-
             # Lookup the node
             node = self.table[key]
 
@@ -110,8 +124,15 @@ class LruDB(object):
             self.mtf(node)
             self.head = node
 
-            return
-
+            return value
+        
+        if self.size == -1:
+            # if size = -1, then no limit of length
+            self.addTailNode(1)
+        else:
+            if self.listSize < self.size:
+                #add 3 node per time.
+                self.addTailNode(1)
         # Ok, no value is currently stored under 'key' in the cache. We need
         # to choose a node to place the new item in. There are two cases. If
         # the cache is full some item will have to be pushed out of the
@@ -129,7 +150,8 @@ class LruDB(object):
         # If the node already contains something we need to remove the old
         # key from the dictionary.
         if not node.empty:
-            del self[node.key]
+            self.remove_cnt += 1
+            del self.table[node.key]
 
         # Place the new key and value in the node
         node.empty = False
@@ -201,15 +223,7 @@ class LruDB(object):
             yield node.value
 
     def size(self, size = None):
-
-        if size is not None:
-            assert size > 0
-            if size > self.listSize:
-                self.addTailNode(size - self.listSize)
-            elif size < self.listSize:
-                self.removeTailNode(self.listSize - size)
-
-        return self.listSize
+        return self.size
 
     # Increases the size of the cache by inserting n empty nodes at the tail
     # of the list.
@@ -221,8 +235,8 @@ class LruDB(object):
 
             self.head.prev.next = node
             self.head.prev = node
-
         self.listSize += n
+
 
     # Decreases the size of the list by removing n nodes from the tail of the
     # list.
@@ -231,7 +245,7 @@ class LruDB(object):
         for _ in range(n):
             node = self.head.prev
             if not node.empty:
-                del self[node.key]
+                del self.table[node.key]
 
             # Splice the tail node out of the list
             self.head.prev = node.prev
@@ -247,11 +261,14 @@ class LruDB(object):
         self.listSize -= n
 
 
-    # This method adjusts the ordering of the doubly linked list so that
-    # 'node' directly precedes the 'head' node. Because of the order of
-    # operations, if 'node' already directly precedes the 'head' node or if
-    # 'node' is the 'head' node the order of the list will be unchanged.
+    
     def mtf(self, node):
+        '''
+        This method adjusts the ordering of the doubly linked list so that
+        'node' directly precedes the 'head' node. Because of the order of
+        operations, if 'node' already directly precedes the 'head' node or if
+        'node' is the 'head' node the order of the list will be unchanged.
+        '''
         node.prev.next = node.next
         node.next.prev = node.prev
 
@@ -270,30 +287,18 @@ class LruDB(object):
             yield node
             node = node.next
     
-    
-    
     def status(self):
-        used = 0
-        for node in self.dli():
-            if not node.empty:
-                used += 1
-        used_status = """
-Single process cache used status:
-    max:%s
-    used:%s
-    miss:%s
-    hits:%s
-    remove:%s
-""" % (self.listSize, used, self.miss, self.hits, self.remove)
-        print (used_status)
-        
+        return {'max': self.size, 'used': len(self.table), 'hit': self.hit_cnt, 'miss': self.miss_cnt, 'remove': self.remove_cnt}
     
 if __name__ == '__main__':
-    import unittest, time, pprint
+    import unittest, time
 
     class TestLruCase(unittest.TestCase):
         def setUp(self):
-            self.test_class = LruDB(2)
+            self.test_class = LruCacheDB(2)
+            
+            self.test_class_nolimit = LruCacheDB()
+            
         def tearDown(self):
             pass
         
@@ -311,12 +316,13 @@ if __name__ == '__main__':
             self.assertEqual(self.test_class[key1], value1)
             
             self.test_class.clear()
+            
+            self.assertEqual(self.test_class.status(), {'max': 2, 'used': 0, 'hit': 0, 'miss': 0, 'remove': 0})
             self.assertRaises(KeyError, self.test_class.__getitem__, key1)
             
             self.test_class[key1] = value1
             self.test_class[key2] = value2
             self.test_class[key3] = value3
-            
             x_array = []
             for x in self.test_class.keys():
                 x_array.append(x)
@@ -336,5 +342,52 @@ if __name__ == '__main__':
                 x_array.append(x)
             
             self.assertEqual(x_array, ['test_key_2', 'test_key_3'])
+            
+            self.assertEqual(self.test_class.get('test_key_2'), 'test_value_2')
+            self.assertEqual(self.test_class.status(), {'max': 2, 'used': 2, 'hit': 2, 'miss': 1, 'remove': 1})
+        
+        def test_lru_db_nolomit(self):
+            key1 = 'test_key_1'
+            value1 = 'test_value_1'
+            key2 = 'test_key_2'
+            value2 = 'test_value_2'
+            key3 = 'test_key_3'
+            value3 = 'test_value_3'
+            
+            self.assertRaises(KeyError, self.test_class_nolimit.__getitem__, key1)
+            
+            self.test_class_nolimit[key1] = value1
+            self.assertEqual(self.test_class_nolimit[key1], value1)
+            
+            self.test_class_nolimit.clear()
+            self.assertEqual(self.test_class_nolimit.status(), {'max': -1, 'used': 0, 'hit': 0, 'miss': 0, 'remove': 0})
+            self.assertRaises(KeyError, self.test_class_nolimit.__getitem__, key1)
+            
+            self.test_class_nolimit[key1] = value1
+            self.test_class_nolimit[key2] = value2
+            self.test_class_nolimit[key3] = value3
+            x_array = []
+            for x in self.test_class_nolimit.keys():
+                x_array.append(x)
+            
+            self.assertEqual(x_array, ['test_key_3', 'test_key_2', 'test_key_1'])
+            
+            self.test_class_nolimit[key2]
+            x_array = []
+            for x in self.test_class_nolimit.keys():
+                x_array.append(x)
+            
+            self.assertEqual(x_array, ['test_key_2', 'test_key_3', 'test_key_1'])
+            
+            self.test_class_nolimit.peek(key3)
+            x_array = []
+            for x in self.test_class_nolimit.keys():
+                x_array.append(x)
+            
+            self.assertEqual(x_array, ['test_key_2', 'test_key_3', 'test_key_1'])
+            
+            self.assertEqual(self.test_class_nolimit.get('test_key_2'), 'test_value_2')
+            
+            self.assertEqual(self.test_class_nolimit.status(), {'max': -1, 'used': 3, 'hit': 2, 'miss': 1, 'remove': 0})
             
     unittest.main()
