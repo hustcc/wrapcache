@@ -1,6 +1,6 @@
 # wrapcache
 
-A python Function / Method OUTPUT cache system base on function Decorators.
+A python Function / Method OUTPUT cache system base on function Decorators. Supports to cache into `redis` or `LRU` memory. [中文README.md](README_zh.md)
 
 [![Build Status](https://travis-ci.org/hustcc/wrapcache.svg)](https://travis-ci.org/hustcc/wrapcache) [![codecov Status](https://codecov.io/github/hustcc/wrapcache/coverage.svg?branch=master)](https://codecov.io/github/hustcc/wrapcache?branch=master) [![PyPi Status](https://img.shields.io/pypi/v/wrapcache.svg)](https://pypi.python.org/pypi/wrapcache) [![PyPi Downloads](https://img.shields.io/pypi/dm/wrapcache.svg)](https://pypi.python.org/pypi/wrapcache)
 
@@ -15,7 +15,7 @@ Issue & Bug: [https://github.com/hustcc/wrapcache/issues/new](https://github.com
 
 The cache keys are dependent completely on the arguments passed to the function. very simple to use. 
 
-Also has some `API` to `Programmatic` get cache or remove cache. Support python 2.6 ~ python3.5.
+Also has some `API` to `Programmatic` get cache or remove cache. `Support python 2.6 ~ python3.5`.
 
 Here's an example of how you might use wrapcache:
 
@@ -51,7 +51,10 @@ Some config:
 ```
 
  - **`timeout`**: how much seconds the cache exist. Default is `-1`, not cached.
- - **`adapter`**: cache where, now can be `RedisAdapter` and `MemoryAdapter`. Default is `MemoryAdapter`. Where use `RedisAdapter`, you need to set redis instance before use. e.g.
+ - **`adapter`**: cache where, now can be `RedisAdapter` and `MemoryAdapter`. Default is `MemoryAdapter`. 
+
+ 
+When use `RedisAdapter`, you need to set redis instance before use. e.g.
 
 ```python
 REDIS_POOL = redis.ConnectionPool(host = '10.246.13.1', port = 6379, password = 'redis_pwd', db = 1)
@@ -59,20 +62,24 @@ REDIS_INST = redis.Redis(connection_pool = REDIS_POOL, charset = 'utf8')
 RedisAdapter.db = REDIS_INST
 ```
 
+When use `MemoryAdapter`, you can set `Memory Storage Policy` before use, that is choose where to store. Default is store in `{}`, also it provide `LUR`(Supported by [jlhutch/pylru](https://github.com/jlhutch/pylru), add `dynamic` size.) algorithm. e.g.
+
+
+```python
+from wrapcache.database import LruCacheDB
+lruDB = MemoryAdapter.db = LruCacheDB(size = 100)
+RedisAdapter.db = lruDB
+```
 
 ## How to Install and Use?
 
 ### Install
 
-Three way to install: 
+Three ways to install wrapcache: 
 
 #### 1. Use tool install
 
- - `easy_install wrapcache`
- 
-or
-
- -  `pip install wrapcache` / `pip3 install wrapcache`
+ - `pip install wrapcache`
 
 #### 2. Download to install
 
@@ -104,10 +111,9 @@ def need_cache_function():
 4. **`wrapcache.remove(key, adapter = MemoryAdapter)`**: remove a cache.
 5. **`wrapcache.flush(adapter = MemoryAdapter)`**: clear all the cache.
 
-The API 2~5, need to input a `adapter` to set which db to flush.
+The API 2~5, need to input a `adapter` to set which db to operate.
 
 
 ## TODO
 
  - add memcache supported.
- - add memory LRU cache. Supported by [https://github.com/jlhutch/pylru](https://github.com/jlhutch/pylru)

@@ -10,7 +10,7 @@ try:
 except:
 	import pickle
 from functools import wraps
-from wrapcache.adapter.CacheException import CacheTimeoutException
+from wrapcache.adapter.CacheException import CacheExpiredException
 from wrapcache.adapter.MemoryAdapter import MemoryAdapter
 
 '''
@@ -39,7 +39,7 @@ def get(key, adapter = MemoryAdapter):
 	'''
 	try:
 		return pickle.loads(adapter().get(key))
-	except CacheTimeoutException:
+	except CacheExpiredException:
 		return None
 
 def remove(key, adapter = MemoryAdapter):
@@ -75,7 +75,7 @@ def wrapcache(timeout = -1, adapter = MemoryAdapter):
 			try:
 				adapter_instance = adapter()
 				return pickle.loads(adapter_instance.get(hash_key))
-			except CacheTimeoutException:
+			except CacheExpiredException:
 				#timeout
 				value = function(*args, **kws)
 				set(hash_key, value, timeout, adapter)

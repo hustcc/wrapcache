@@ -3,7 +3,7 @@
 Cache Exceptions
 '''
 
-class CacheTimeoutException(Exception):
+class CacheExpiredException(Exception):
 	def __init__(self, value):
 		self.value = value
 		

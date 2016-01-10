@@ -4,7 +4,7 @@ Memory Adapter object.
 '''
 import time
 from wrapcache.adapter.BaseAdapter import BaseAdapter
-from wrapcache.adapter.CacheException import CacheTimeoutException
+from wrapcache.adapter.CacheException import CacheExpiredException
 
 
 class MemoryAdapter(BaseAdapter):
@@ -20,7 +20,7 @@ class MemoryAdapter(BaseAdapter):
 		cache = MemoryAdapter.db.get(key, {})
 		if time.time() - cache.get('time', 0) > 0:
 			self.remove(key) #timeout, rm key, reduce memory
-			raise CacheTimeoutException(key)
+			raise CacheExpiredException(key)
 		else:
 			return cache.get('value', None)
 
@@ -36,7 +36,7 @@ class MemoryAdapter(BaseAdapter):
 		return MemoryAdapter.db.pop(key, {}).get('value', None)
 
 	def flush(self):
-		MemoryAdapter.db = {}
+		MemoryAdapter.db.clear()
 		return True
 
 if __name__ == '__main__':
@@ -56,16 +56,16 @@ if __name__ == '__main__':
 			self.test_class.set(key, value)
 			self.assertEqual(self.test_class.get(key), value)
 			time.sleep(4)
-			self.assertRaises(CacheTimeoutException, self.test_class.get, key)
+			self.assertRaises(CacheExpiredException, self.test_class.get, key)
 			
 			#test remove
 			self.test_class.set(key, value)
 			self.test_class.remove(key)
-			self.assertRaises(CacheTimeoutException, self.test_class.get, key)
+			self.assertRaises(CacheExpiredException, self.test_class.get, key)
 			
 			#test flush
 			self.test_class.set(key, value)
 			self.test_class.flush()
-			self.assertRaises(CacheTimeoutException, self.test_class.get, key)
+			self.assertRaises(CacheExpiredException, self.test_class.get, key)
 			
 	unittest.main()
