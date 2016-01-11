@@ -53,7 +53,7 @@ if __name__ == '__main__':
 			# get a new instance without cache
 			new_adapter = MemoryAdapter(timeout = 1)
 			cur_db = new_adapter.db
-			self.assertIs(pre_db, cur_db)
+			self.assertEqual(id(pre_db), id(cur_db))
 
 		def test_memory_adapter(self):
 			key = 'test_key_1'
