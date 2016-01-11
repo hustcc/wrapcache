@@ -2,7 +2,7 @@
 
 一个基于Python装饰器Decorators的方法缓存系统，用于缓存Python方法的输出值，可以支持复杂数据类型，可以缓存到Redis中、Python dict、LUR算法存储中。[English README.md](README.md)
 
-[![Build Status](https://travis-ci.org/hustcc/wrapcache.svg)](https://travis-ci.org/hustcc/wrapcache) [![codecov Status](https://codecov.io/github/hustcc/wrapcache/coverage.svg?branch=master)](https://codecov.io/github/hustcc/wrapcache?branch=master) [![PyPi Status](https://img.shields.io/pypi/v/wrapcache.svg)](https://pypi.python.org/pypi/wrapcache) [![PyPi Downloads](https://img.shields.io/pypi/dm/wrapcache.svg)](https://pypi.python.org/pypi/wrapcache)
+[![Build Status](https://travis-ci.org/hustcc/wrapcache.svg)](https://travis-ci.org/hustcc/wrapcache) [![codecov Status](https://codecov.io/github/hustcc/wrapcache/coverage.svg?branch=master)](https://codecov.io/github/hustcc/wrapcache?branch=master) [![PyPi Status](https://img.shields.io/pypi/v/wrapcache.svg)](https://pypi.python.org/pypi/wrapcache) [![PyPi Downloads](https://img.shields.io/pypi/dm/wrapcache.svg)](https://pypi.python.org/pypi/wrapcache) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/hustcc/wrapcache/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 Github地址: [https://github.com/hustcc/wrapcache](https://github.com/hustcc/wrapcache)
 

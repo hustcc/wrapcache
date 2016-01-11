@@ -2,7 +2,7 @@
 
 A python Function / Method OUTPUT cache system base on function Decorators. Supports to cache into `redis` or `LRU` memory. [中文README.md](README_zh.md)
 
-[![Build Status](https://travis-ci.org/hustcc/wrapcache.svg)](https://travis-ci.org/hustcc/wrapcache) [![codecov Status](https://codecov.io/github/hustcc/wrapcache/coverage.svg?branch=master)](https://codecov.io/github/hustcc/wrapcache?branch=master) [![PyPi Status](https://img.shields.io/pypi/v/wrapcache.svg)](https://pypi.python.org/pypi/wrapcache) [![PyPi Downloads](https://img.shields.io/pypi/dm/wrapcache.svg)](https://pypi.python.org/pypi/wrapcache)
+[![Build Status](https://travis-ci.org/hustcc/wrapcache.svg)](https://travis-ci.org/hustcc/wrapcache) [![codecov Status](https://codecov.io/github/hustcc/wrapcache/coverage.svg?branch=master)](https://codecov.io/github/hustcc/wrapcache?branch=master) [![PyPi Status](https://img.shields.io/pypi/v/wrapcache.svg)](https://pypi.python.org/pypi/wrapcache) [![PyPi Downloads](https://img.shields.io/pypi/dm/wrapcache.svg)](https://pypi.python.org/pypi/wrapcache) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/hustcc/wrapcache/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 Source code: [https://github.com/hustcc/wrapcache](https://github.com/hustcc/wrapcache)
 
