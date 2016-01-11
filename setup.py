@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from distutils.core import setup
-import wrapcache
 LONGDOC = """
 wrapcache：wrap cache， python方法装饰器缓存系统。
 
@@ -30,7 +29,7 @@ GitHub: https://github.com/hustcc/wrapcache
 """
 
 setup(name = 'wrapcache',
-      version = wrapcache.__version__,
+      version = '1.0.4',
       description = 'Short for wraps cache. A method cache system base on method Decorators.',
       long_description = LONGDOC,
       author = 'hustcc',
