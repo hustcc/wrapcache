@@ -1,6 +1,6 @@
 #-*-coding: utf-8 -*-
 '''
-Memory Adapter object.
+Redis Adapter object.
 '''
 from wrapcache.adapter.BaseAdapter import BaseAdapter
 from wrapcache.adapter.CacheException import CacheExpiredException, DBNotSetException

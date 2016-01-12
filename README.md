@@ -116,4 +116,4 @@ The API 2~5, need to input a `adapter` to set which db to operate.
 
 ## TODO
 
- - add memcache supported.
+ - usage wiki.

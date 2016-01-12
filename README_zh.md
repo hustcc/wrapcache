@@ -126,4 +126,4 @@ API方法中，第2~5个API在使用的时候，需要传入 `adapter` 来设置
 
 ## TODO
 
- - 增加memcache支持。
+ - 使用文档 wiki.

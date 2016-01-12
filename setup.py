@@ -29,7 +29,7 @@ GitHub: https://github.com/hustcc/wrapcache
 """
 
 setup(name = 'wrapcache',
-      version = '1.0.5',
+      version = '1.0.6',
       description = 'Short for wraps cache. A method cache system base on method Decorators.',
       long_description = LONGDOC,
       author = 'hustcc',
@@ -45,12 +45,14 @@ setup(name = 'wrapcache',
         'Natural Language :: English',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.5',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
         'Topic :: Utilities',
         'Topic :: Software Development :: Embedded Systems'
       ],
