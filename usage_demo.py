@@ -5,6 +5,8 @@ import sys, random
 
 import wrapcache
 from wrapcache.adapter.RedisAdapter import RedisAdapter
+from wrapcache.adapter.MemoryAdapter import MemoryAdapter
+from wrapcache.database import LruCacheDB
 
 @wrapcache.wrapcache(timeout = 3)
 def need_mem_cache_function():
@@ -18,6 +20,13 @@ def need_redis_cache_function():
 	print('redis cache timeout, new...')
 	return (random.randint(1, 100), 'Hello wrapcache')
 
+
+MemoryAdapter.db = LruCacheDB(size = 100)
+@wrapcache.wrapcache(timeout = 3, adapter = MemoryAdapter)
+def need_mem_lru_cache_function():
+	time.sleep(2)
+	print('mem cache timeout, new...')
+	return random.randint(1, 100)
 
 if __name__ =='__main__':
 

@@ -4,9 +4,7 @@
 
 [![Build Status](https://travis-ci.org/hustcc/wrapcache.svg)](https://travis-ci.org/hustcc/wrapcache) [![codecov Status](https://codecov.io/github/hustcc/wrapcache/coverage.svg?branch=master)](https://codecov.io/github/hustcc/wrapcache?branch=master) [![PyPi Status](https://img.shields.io/pypi/v/wrapcache.svg)](https://pypi.python.org/pypi/wrapcache) [![Python Versions](https://img.shields.io/pypi/pyversions/wrapcache.svg)](https://pypi.python.org/pypi/wrapcache) [![PyPi Downloads](https://img.shields.io/pypi/dm/wrapcache.svg)](https://pypi.python.org/pypi/wrapcache)
 
-Github地址: [https://github.com/hustcc/wrapcache](https://github.com/hustcc/wrapcache)
-
-Issue & Bug: [https://github.com/hustcc/wrapcache/issues/new](https://github.com/hustcc/wrapcache/issues/new)
+> [Homepage](http://git.atool.org/wrapcache/) | [Usage & Doc](http://git.atool.org/wrapcache/) | [Source Code](https://github.com/hustcc/wrapcache) | [Issue & Bug](https://github.com/hustcc/wrapcache/issues/new)
 
 
 ## 什么是 wrapcache?
