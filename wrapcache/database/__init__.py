@@ -170,9 +170,11 @@ class LruCacheDB(object):
 
 	def __delitem__(self, key):
 		# Lookup the node, then remove it from the hash table.
-		node = self.table[key]
-		del self.table[key]
-
+		node = self.table.get(key, None)
+		try:
+			del self.table[key]
+		except:
+			raise KeyError
 		node.empty = True
 
 		# Not strictly necessary.
@@ -189,7 +191,21 @@ class LruCacheDB(object):
 		self.head = node.next
 		
 		self.remove += 1
-
+	
+	def pop(self, key, default = None):
+		"""Delete the item"""
+		node = self.get(key, None)
+		
+		if node == None:
+			value = default
+		else:
+			value = node
+		try:
+			del self[key]
+		except:
+			return value
+		return value 
+	
 	def __iter__(self):
 
 		# Return an iterator that returns the keys in the cache in order from
