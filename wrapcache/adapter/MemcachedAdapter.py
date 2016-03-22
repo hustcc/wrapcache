@@ -30,8 +30,12 @@ class MemcachedAdapter(BaseAdapter):
         return True
 
     def remove(self, key):
-        self._check_db_instanse()
-        return MemcachedAdapter.db.delete(key)
+        try:
+            v = self.get(key)
+            MemcachedAdapter.db.delete(key)
+            return v
+        except CacheExpiredException, _:
+            return False
 
     def flush(self):
         self._check_db_instanse()

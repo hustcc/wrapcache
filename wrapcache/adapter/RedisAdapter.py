@@ -30,8 +30,12 @@ class RedisAdapter(BaseAdapter):
 		return True
 
 	def remove(self, key):
-		self._check_db_instanse()
-		return RedisAdapter.db.delete(key)
+		try:
+			v = self.get(key)
+			RedisAdapter.db.delete(key)
+			return v
+		except CacheExpiredException, _:
+			return False
 
 	def flush(self):
 		self._check_db_instanse()
