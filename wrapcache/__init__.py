@@ -20,12 +20,17 @@ A python Function / Method OUTPUT cache system base on function Decorators.
 
 Auto cache the Funtion OUTPUT for sometime.
 '''
+def _from_file(function):
+    if hasattr(function, '__code__'):
+        return function.__code__.co_filename
+    else:
+        return ''
 
 def _wrap_key(function, args, kws):
 	'''
 	get the key from the function input.
 	'''
-	return hashlib.md5(pickle.dumps((function.__name__, args, kws))).hexdigest()
+	return hashlib.md5(pickle.dumps((_from_file(function) + function.__name__, args, kws))).hexdigest()
 
 def keyof(function, *args, **kws):
 	'''
